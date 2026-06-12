@@ -179,38 +179,6 @@ export default function App() {
       {/* 3. Main Workspace Grid Container (Scrollable only if screen is very short, otherwise fully fit) */}
       <main className="relative z-10 w-full min-h-[100dvh] lg:h-full flex flex-col items-center justify-between px-3 sm:px-4 py-4 sm:py-6 md:px-8 xl:px-12 overflow-y-auto custom-scrollbar">
         
-        {/* Real-time branding header (Site Logo and Title) */}
-        <div className="w-full max-w-2xl lg:max-w-5xl xl:max-w-6xl flex items-center justify-between mb-4 lg:mb-6 animate-fade-in-blur">
-          <div className="flex items-center gap-3">
-             <div className="p-1 bg-white/50 rounded-xl border border-white/40 shadow-sm backdrop-blur-md">
-               <img 
-                 src={getAssetUrl("avatar2.png")} 
-                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-cover" 
-                 alt="Logo" 
-                 referrerPolicy="no-referrer"
-               />
-             </div>
-             <div>
-               <h1 className="text-sm sm:text-base font-display font-black text-slate-900 tracking-tighter uppercase leading-none">Sky Personal</h1>
-               <div className="flex items-center gap-1.5 mt-0.5">
-                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                 <span className="text-[9px] font-mono text-slate-500 font-bold uppercase tracking-widest">System Online</span>
-               </div>
-             </div>
-          </div>
-          <div className="hidden sm:flex items-center gap-5 text-[10px] text-slate-500/70 font-mono tracking-tighter uppercase">
-            <div className="flex flex-col items-end">
-              <span className="font-bold text-slate-700">Personal Workspace</span>
-              <span>v2.4.0-stable</span>
-            </div>
-            <div className="w-px h-6 bg-slate-300/50"></div>
-            <div className="flex flex-col items-end">
-              <span className="font-bold text-slate-700">Last Synced</span>
-              <span>{new Date().toLocaleDateString()}</span>
-            </div>
-          </div>
-        </div>
-
         {/* Master Flex container (stacks on small, splits on large with elegant content bounds) */}
         <div className="w-full max-w-2xl lg:max-w-5xl xl:max-w-6xl my-auto grid grid-cols-1 lg:grid-cols-5 gap-5 lg:gap-6 xl:gap-8 items-stretch pt-2 lg:pt-4 pb-4">
           
