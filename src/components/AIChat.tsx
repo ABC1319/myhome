@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Send, Sparkles, Bot, User, Trash2 } from "lucide-react";
 import { ChatMessage } from "../types";
 import { getAssetUrl } from "../utils";
+import { SITE_LOGO } from "../data";
 
 export default function AIChat() {
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
@@ -160,7 +161,7 @@ export default function AIChat() {
                 {isUser ? (
                   <User size={10} className="text-indigo-600" />
                 ) : (
-                  <img src={getAssetUrl("avatar2.png")} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={getAssetUrl(SITE_LOGO)} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 )}
               </div>
 
@@ -185,7 +186,7 @@ export default function AIChat() {
         {isTyping && (
           <div className="flex items-start gap-2.5 flex-row">
             <div className="w-6.5 h-6.5 rounded-full flex items-center justify-center bg-white border border-slate-200 select-none shrink-0 overflow-hidden">
-              <img src={getAssetUrl("avatar2.png")} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              <img src={getAssetUrl(SITE_LOGO)} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             </div>
             
             <div className="bg-white border border-slate-200/50 p-3 rounded-2xl rounded-tl-none flex items-center space-x-1.5 animate-pulse">

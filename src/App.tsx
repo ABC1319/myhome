@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 
 import { getAssetUrl } from "./utils";
+import { PRESET_WALLPAPERS, VALID_WALLPAPER_FILENAMES, DEFAULT_WALLPAPER, SITE_LOGO } from "./data";
 import Clock from "./components/Clock";
 import Weather from "./components/Weather";
 import Hitokoto from "./components/Hitokoto";
@@ -21,28 +22,20 @@ type MenuTab = "sites" | "skills" | "player" | "guestbook" | "chat";
 export default function App() {
   // Sync core visual aesthetics from localStorage persistence
   const [wallpaper, setWallpaper] = useState(() => {
-    const defaultRaw = "healing-sailing.webp";
     const saved = localStorage.getItem("homepage_wallpaper");
     
-    if (!saved) return defaultRaw;
+    if (!saved) return DEFAULT_WALLPAPER;
 
     // Validate if it's one of our new ASCII filenames or a clean filename
-    const validFiles = [
-      "healing-sailing.webp", "bookshelf.webp", "countryside.webp", 
-      "night-sky.webp", "china-city.webp", "anime-scenery.webp", 
-      "hammock.webp", "city-skyline.webp"
-    ];
-    
-    // Add avatar to valid files but not as a wallpaper choice in the main picker
-    if (saved === "avatar2.png") return saved;
+    if (saved === SITE_LOGO) return saved;
     
     const filename = saved.split('/').pop() || '';
-    if (validFiles.includes(filename)) {
+    if (VALID_WALLPAPER_FILENAMES.includes(filename)) {
       return filename;
     }
     
     // If it's a legacy Chinese filename or path, fallback to default
-    return defaultRaw;
+    return DEFAULT_WALLPAPER;
   });
 
   const [blurAmount, setBlurAmount] = useState(() => {
@@ -145,12 +138,15 @@ export default function App() {
   ];
 
   // Dynamic recognition of dark-toned backgrounds to harmonize module colors and background
-  const isDarkBg = 
-    wallpaper.includes("night-sky") ||
-    wallpaper.includes("city-skyline") ||
-    wallpaper.includes("china-city") ||
-    wallpaper.includes("anime-scenery") ||
-    wallpaper.includes("hammock");
+  const isDarkBg = React.useMemo(() => {
+    // Check if current wallpaper is in our preset list and marked as dark
+    const preset = PRESET_WALLPAPERS.find(wp => wp.url === wallpaper);
+    if (preset) return preset.isDark;
+    
+    // Fallback for custom wallpapers (default to light unless keywords present)
+    const lower = wallpaper.toLowerCase();
+    return lower.includes("night") || lower.includes("dark") || lower.includes("skyline");
+  }, [wallpaper]);
 
   return (
     <div className={`relative w-full min-h-[100dvh] lg:h-[100dvh] lg:overflow-hidden ${fontStyle} select-none ${isDarkBg ? "dark-theme" : "light-theme"}`}>
@@ -211,7 +207,7 @@ export default function App() {
                 <div className="absolute inset-x-0 inset-y-0 -m-1 rounded-full bg-gradient-to-tr from-indigo-500 via-pink-500 to-cyan-400 filter blur-sm group-hover/avatar:blur-md opacity-40 group-hover/avatar:opacity-100 transition-all animate-spin-slow"></div>
                 <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-slate-200/80 bg-white shadow-xl transition-transform duration-500 group-hover/avatar:rotate-[360deg] cursor-pointer">
                   <img
-                    src={getAssetUrl("avatar2.png")}
+                    src={getAssetUrl(SITE_LOGO)}
                     alt="Developer Avatar"
                     className="w-full h-full object-cover rounded-full"
                     referrerPolicy="no-referrer"

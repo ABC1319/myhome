@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Settings, X, Image, Sliders, Type, RotateCcw } from "lucide-react";
-import { PresetWallpaper } from "../types";
+import { PRESET_WALLPAPERS, DEFAULT_WALLPAPER } from "../data";
 import { getAssetUrl } from "../utils";
 
 interface ControlCenterProps {
@@ -27,57 +27,6 @@ export default function ControlCenter({
   const [isOpen, setIsOpen] = useState(false);
   const [customUrl, setCustomUrl] = useState("");
 
-  const presetWallpapers: PresetWallpaper[] = [
-    {
-      id: "shanchuan",
-      name: "治愈帆船",
-      url: "healing-sailing.webp",
-      thumbnail: "healing-sailing.webp"
-    },
-    {
-      id: "shujia",
-      name: "书香角落",
-      url: "bookshelf.webp",
-      thumbnail: "bookshelf.webp"
-    },
-    {
-      id: "xiaowu",
-      name: "乡野小屋",
-      url: "countryside.webp",
-      thumbnail: "countryside.webp"
-    },
-    {
-      id: "yewan",
-      name: "云岚夜色",
-      url: "night-sky.webp",
-      thumbnail: "night-sky.webp"
-    },
-    {
-      id: "chengshi",
-      name: "华灯盛世",
-      url: "china-city.webp",
-      thumbnail: "china-city.webp"
-    },
-    {
-      id: "erciyuan",
-      name: "动漫场景",
-      url: "anime-scenery.webp",
-      thumbnail: "anime-scenery.webp"
-    },
-    {
-      id: "diaochuang",
-      name: "静谧吊床",
-      url: "hammock.webp",
-      thumbnail: "hammock.webp"
-    },
-    {
-      id: "skyline",
-      name: "璨烂天际",
-      url: "city-skyline.webp",
-      thumbnail: "city-skyline.webp"
-    }
-  ];
-
   const handleCustomWallpaper = (e: React.FormEvent) => {
     e.preventDefault();
     if (customUrl.trim()) {
@@ -88,7 +37,7 @@ export default function ControlCenter({
 
   const handleReset = () => {
     if (confirm("确定要恢复网页的初始外观与视觉配置吗？")) {
-      setWallpaper("healing-sailing.webp"); // Reset to default
+      setWallpaper(DEFAULT_WALLPAPER); // Reset to default
       setBlurAmount(18);
       setFontStyle("font-sans");
       setOpacityAmount(0.35);
@@ -146,7 +95,7 @@ export default function ControlCenter({
                     <span>选择预设高画质壁纸 (WALLPAPER)</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
-                    {presetWallpapers.map((wp) => (
+                    {PRESET_WALLPAPERS.map((wp) => (
                       <button
                         key={wp.id}
                         onClick={() => setWallpaper(wp.url)}
