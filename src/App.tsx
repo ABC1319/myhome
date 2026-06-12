@@ -17,15 +17,36 @@ import ControlCenter from "./components/ControlCenter";
 
 type MenuTab = "sites" | "skills" | "player" | "guestbook" | "chat";
 
+export const getAssetUrl = (path: string) => {
+  if (!path) return '';
+  // Convert old src/assets to public assets
+  if (path.includes('/src/assets/')) {
+    path = path.replace(/.*\/src\/assets\//, 'assets/');
+  }
+  // Convert absolute local URLs or paths
+  if (path.startsWith('http') && path.includes(window.location.host)) {
+    try {
+      const url = new URL(path);
+      path = url.pathname.replace(/^\/+/, ''); // e.g. "assets/..."
+    } catch (e) {}
+  }
+  if (path.startsWith('http') || path.startsWith('data:')) return path;
+
+  // Normalize path removing leading slashes and dots
+  const cleanPath = path.replace(/^(\.\/|\/)+/, '');
+  const base = import.meta.env.BASE_URL || '/';
+  return `${base.endsWith('/') ? base : base + '/'}${cleanPath}`;
+};
+
 export default function App() {
   // Sync core visual aesthetics from localStorage persistence
   const [wallpaper, setWallpaper] = useState(() => {
-    const defaultUrl = "./assets/帆船-沙滩-治愈系.webp";
+    const defaultAsset = "assets/帆船-沙滩-治愈系.webp";
     const saved = localStorage.getItem("homepage_wallpaper");
-    if (!saved) return defaultUrl;
-    // Fix absolute or invalid paths
-    if (saved.startsWith("/assets/")) return "." + saved;
-    if (saved.startsWith("assets/")) return "./" + saved;
+    if (!saved) return defaultAsset;
+    
+    // Fallback if the saved url is a legacy path
+    if (saved.includes('/src/assets/')) return defaultAsset;
     return saved;
   });
 
@@ -146,7 +167,7 @@ export default function App() {
       {/* 1. Backdrop Fixed Wallpaper */}
       <div 
         className="fixed inset-0 bg-cover bg-center transition-all duration-700 ease-in-out scale-102"
-        style={{ backgroundImage: `url("${wallpaper}")` }}
+        style={{ backgroundImage: `url("${getAssetUrl(wallpaper)}")` }}
       />
 
       {/* 2. Glassmorphism Blur Dynamic filter layer */}
@@ -200,7 +221,7 @@ export default function App() {
                 <div className="absolute inset-x-0 inset-y-0 -m-1 rounded-full bg-gradient-to-tr from-indigo-500 via-pink-500 to-cyan-400 filter blur-sm group-hover/avatar:blur-md opacity-40 group-hover/avatar:opacity-100 transition-all animate-spin-slow"></div>
                 <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-slate-200/80 bg-white shadow-xl transition-transform duration-500 group-hover/avatar:rotate-[360deg] cursor-pointer">
                   <img
-                    src="./assets/avatar2.png"
+                    src={getAssetUrl("assets/avatar2.png")}
                     alt="Developer Avatar"
                     className="w-full h-full object-cover rounded-full"
                     referrerPolicy="no-referrer"

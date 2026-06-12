@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: './',
+    base: './', // Using relative paths for better gh-pages compatibility
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
