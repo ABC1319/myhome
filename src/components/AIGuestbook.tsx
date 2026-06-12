@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Send, MessageSquare, Clock, Sparkles, User, UserCheck } from "lucide-react";
 import { GuestbookMessage } from "../types";
+import { getAssetUrl } from "../utils";
 
 export default function AIGuestbook() {
   const [messages, setMessages] = useState<GuestbookMessage[]>([]);
@@ -213,7 +214,9 @@ export default function AIGuestbook() {
                     <div className="absolute top-0 right-0 w-12 h-12 bg-indigo-500/5 filter blur-md rounded-full pointer-events-none"></div>
                     
                     <div className="flex items-center gap-1.5 text-[10px] text-indigo-700 font-mono font-semibold">
-                      <UserCheck size={11} className="text-indigo-600" />
+                      <div className="w-4.5 h-4.5 rounded-full overflow-hidden border border-indigo-200 shrink-0">
+                         <img src={getAssetUrl("avatar2.png")} className="w-full h-full object-cover" alt="AI Avatar" referrerPolicy="no-referrer" />
+                      </div>
                       <span>Sky 的主理分身 (AI Assistant)</span>
                       <span className="text-[9px] scale-90 px-1 py-0.1 bg-indigo-600 text-white border border-indigo-500/20 rounded font-bold font-sans">
                         REPLY

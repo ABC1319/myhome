@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Send, Sparkles, Bot, User, Trash2 } from "lucide-react";
 import { ChatMessage } from "../types";
+import { getAssetUrl } from "../utils";
 
 export default function AIChat() {
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
@@ -154,12 +155,12 @@ export default function AIChat() {
             >
               {/* Profile icon */}
               <div 
-                className={`w-6.5 h-6.5 rounded-full flex items-center justify-center border select-none shrink-0 ${isUser ? "bg-indigo-100 border-indigo-200" : "bg-slate-100 border-slate-200"}`}
+                className={`w-6.5 h-6.5 rounded-full flex items-center justify-center border select-none shrink-0 ${isUser ? "bg-indigo-100 border-indigo-200" : "bg-white border-slate-200 overflow-hidden"}`}
               >
                 {isUser ? (
                   <User size={10} className="text-indigo-600" />
                 ) : (
-                  <Bot size={10} className="text-slate-600" />
+                  <img src={getAssetUrl("avatar2.png")} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 )}
               </div>
 
@@ -183,8 +184,8 @@ export default function AIChat() {
         {/* Typing indicator */}
         {isTyping && (
           <div className="flex items-start gap-2.5 flex-row">
-            <div className="w-6.5 h-6.5 rounded-full flex items-center justify-center bg-slate-100 border border-slate-200 select-none shrink-0">
-              <Bot size={10} className="text-slate-600" />
+            <div className="w-6.5 h-6.5 rounded-full flex items-center justify-center bg-white border border-slate-200 select-none shrink-0 overflow-hidden">
+              <img src={getAssetUrl("avatar2.png")} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
             </div>
             
             <div className="bg-white border border-slate-200/50 p-3 rounded-2xl rounded-tl-none flex items-center space-x-1.5 animate-pulse">

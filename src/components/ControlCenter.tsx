@@ -31,50 +31,50 @@ export default function ControlCenter({
     {
       id: "shanchuan",
       name: "治愈帆船",
-      url: "帆船-沙滩-治愈系.webp",
-      thumbnail: "帆船-沙滩-治愈系.webp"
+      url: "healing-sailing.webp",
+      thumbnail: "healing-sailing.webp"
     },
     {
       id: "shujia",
       name: "书香角落",
-      url: "书架-书桌文具.webp",
-      thumbnail: "书架-书桌文具.webp"
+      url: "bookshelf.webp",
+      thumbnail: "bookshelf.webp"
     },
     {
       id: "xiaowu",
       name: "乡野小屋",
-      url: "乡村小屋-乡间小路.webp",
-      thumbnail: "乡村小屋-乡间小路.webp"
+      url: "countryside.webp",
+      thumbnail: "countryside.webp"
     },
     {
       id: "yewan",
       name: "云岚夜色",
-      url: "云彩-夜晚-夜景.webp",
-      thumbnail: "云彩-夜晚-夜景.webp"
+      url: "night-sky.webp",
+      thumbnail: "night-sky.webp"
     },
     {
       id: "chengshi",
       name: "华灯盛世",
-      url: "中国-城市建筑.webp",
-      thumbnail: "中国-城市建筑.webp"
+      url: "china-city.webp",
+      thumbnail: "china-city.webp"
     },
     {
       id: "erciyuan",
       name: "动漫场景",
-      url: "二次元-动漫场景.webp",
-      thumbnail: "二次元-动漫场景.webp"
+      url: "anime-scenery.webp",
+      thumbnail: "anime-scenery.webp"
     },
     {
       id: "diaochuang",
       name: "静谧吊床",
-      url: "吊床-宁静环境.webp",
-      thumbnail: "吊床-宁静环境.webp"
+      url: "hammock.webp",
+      thumbnail: "hammock.webp"
     },
     {
       id: "skyline",
       name: "璨烂天际",
-      url: "城市夜景-城市天际线.webp",
-      thumbnail: "城市夜景-城市天际线.webp"
+      url: "city-skyline.webp",
+      thumbnail: "city-skyline.webp"
     }
   ];
 
@@ -88,7 +88,7 @@ export default function ControlCenter({
 
   const handleReset = () => {
     if (confirm("确定要恢复网页的初始外观与视觉配置吗？")) {
-      setWallpaper(getAssetUrl(presetWallpapers[0].url)); // Reset to first healing sailing wallpaper
+      setWallpaper("healing-sailing.webp"); // Reset to default
       setBlurAmount(18);
       setFontStyle("font-sans");
       setOpacityAmount(0.35);
@@ -149,8 +149,8 @@ export default function ControlCenter({
                     {presetWallpapers.map((wp) => (
                       <button
                         key={wp.id}
-                        onClick={() => setWallpaper(getAssetUrl(wp.url))}
-                        className={`group relative h-14 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${currentWallpaper === getAssetUrl(wp.url) ? "border-indigo-500 scale-95 shadow-lg shadow-indigo-500/10" : "border-transparent opacity-70 hover:opacity-100"}`}
+                        onClick={() => setWallpaper(wp.url)}
+                        className={`group relative h-14 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${currentWallpaper === wp.url ? "border-indigo-500 scale-95 shadow-lg shadow-indigo-500/10" : "border-transparent opacity-70 hover:opacity-100"}`}
                         title={wp.name}
                       >
                         <img

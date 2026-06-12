@@ -21,24 +21,28 @@ type MenuTab = "sites" | "skills" | "player" | "guestbook" | "chat";
 export default function App() {
   // Sync core visual aesthetics from localStorage persistence
   const [wallpaper, setWallpaper] = useState(() => {
-    const defaultRaw = "assets/帆船-沙滩-治愈系.webp";
+    const defaultRaw = "healing-sailing.webp";
     const saved = localStorage.getItem("homepage_wallpaper");
     
-    // If no saved wallpaper, use default
-    if (!saved) return getAssetUrl(defaultRaw);
+    if (!saved) return defaultRaw;
+
+    // Validate if it's one of our new ASCII filenames or a clean filename
+    const validFiles = [
+      "healing-sailing.webp", "bookshelf.webp", "countryside.webp", 
+      "night-sky.webp", "china-city.webp", "anime-scenery.webp", 
+      "hammock.webp", "city-skyline.webp"
+    ];
     
-    // If saved wallpaper is an absolute path from a different base or legacy internal path, fix it
-    if (saved.startsWith('/') || saved.includes('/src/assets/')) {
-       // Extract filename if possible
-       const parts = saved.split('/');
-       const filename = parts[parts.length - 1];
-       if (filename && filename.includes('.')) {
-         return getAssetUrl(filename);
-       }
-       return getAssetUrl(defaultRaw);
+    // Add avatar to valid files but not as a wallpaper choice in the main picker
+    if (saved === "avatar2.png") return saved;
+    
+    const filename = saved.split('/').pop() || '';
+    if (validFiles.includes(filename)) {
+      return filename;
     }
     
-    return saved;
+    // If it's a legacy Chinese filename or path, fallback to default
+    return defaultRaw;
   });
 
   const [blurAmount, setBlurAmount] = useState(() => {
@@ -142,16 +146,11 @@ export default function App() {
 
   // Dynamic recognition of dark-toned backgrounds to harmonize module colors and background
   const isDarkBg = 
-    wallpaper.includes("夜晚") || 
-    wallpaper.includes("夜景") || 
-    wallpaper.includes("二次元") || 
-    wallpaper.includes("城市") || 
-    wallpaper.includes("yewan") || 
-    wallpaper.includes("skyline") || 
-    wallpaper.includes("chengshi") || 
-    wallpaper.includes("erciyuan") ||
-    wallpaper.includes("diaochuang") ||
-    wallpaper.includes("吊床");
+    wallpaper.includes("night-sky") ||
+    wallpaper.includes("city-skyline") ||
+    wallpaper.includes("china-city") ||
+    wallpaper.includes("anime-scenery") ||
+    wallpaper.includes("hammock");
 
   return (
     <div className={`relative w-full min-h-[100dvh] lg:h-[100dvh] lg:overflow-hidden ${fontStyle} select-none ${isDarkBg ? "dark-theme" : "light-theme"}`}>
