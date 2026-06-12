@@ -25,9 +25,19 @@ export const getAssetUrl = (path: string) => {
   let cleanPath = path.replace(/.*\/src\/assets\//, 'assets/');
   cleanPath = cleanPath.replace(/^(\.\/|\/)+/, ''); // Strip leading ./ or /
 
-  // By using a relative path, gh-pages will correctly resolve the assets
-  // from the current directory where index.html is served.
-  return `./${cleanPath}`;
+  let base = import.meta.env.BASE_URL;
+  if (base === './' || base === '') {
+    // Determine absolute path dynamically relative to current pathname for gh-pages without trailing slash
+    let pathname = window.location.pathname;
+    if (!pathname.endsWith('/') && !pathname.endsWith('.html')) {
+      pathname += '/';
+    } else if (pathname.endsWith('.html')) {
+      pathname = pathname.substring(0, pathname.lastIndexOf('/') + 1);
+    }
+    base = pathname;
+  }
+  
+  return `${base.endsWith('/') ? base : base + '/'}${cleanPath}`;
 };
 
 export default function App() {
