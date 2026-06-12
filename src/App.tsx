@@ -5,6 +5,7 @@ import {
   Sparkles, Coffee, Heart, Globe, MessageCircle
 } from "lucide-react";
 
+import { getAssetUrl } from "./utils";
 import Clock from "./components/Clock";
 import Weather from "./components/Weather";
 import Hitokoto from "./components/Hitokoto";
@@ -16,32 +17,6 @@ import AIChat from "./components/AIChat";
 import ControlCenter from "./components/ControlCenter";
 
 type MenuTab = "sites" | "skills" | "player" | "guestbook" | "chat";
-
-export const getAssetUrl = (path: string) => {
-  if (!path) return '';
-  if (path.startsWith('http') || path.startsWith('data:')) return path;
-
-  // 1. Clean path - extract everything after 'assets/' to avoid double prefixes or legacy internal paths
-  let cleanPath = path;
-  if (path.includes('assets/')) {
-    cleanPath = path.substring(path.indexOf('assets/'));
-  }
-  // Remove leading slashes or dots to normalize
-  cleanPath = cleanPath.replace(/^(\.\/|\/)+/, '');
-
-  // 2. Resolve based on Vite's BASE_URL (defaults to './' if not specified)
-  const base = import.meta.env.BASE_URL || './';
-  const prefix = (base === './' || base === '') ? '' : (base.endsWith('/') ? base : `${base}/`);
-  const resolved = `${prefix}${cleanPath}`;
-
-  // 3. Simple encodeURI for safety with Chinese characters.
-  // decodeURI ensures we don't double-encode paths already coming from state/storage
-  try {
-    return encodeURI(decodeURI(resolved));
-  } catch (e) {
-    return encodeURI(resolved);
-  }
-};
 
 export default function App() {
   // Sync core visual aesthetics from localStorage persistence
