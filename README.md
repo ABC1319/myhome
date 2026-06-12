@@ -158,12 +158,12 @@ npx wrangler pages deploy dist
 4. 编译成功后，进入 **"Settings" -> "Pages"**，确保 "Build and deployment" 下的 **"Branch"** 选项被配置为了 `gh-pages` 且保存，几分钟后便能在生成的链接内直接加载完美静态应用。
 
 #### 2. 修改 `vite.config.ts` 中的 `base` 路径 (生产环境优化)
-为了确保在 Cloudflare Pages、GitHub Pages 或各种子目录下，静态资源解析都能自动适配：
-我们已经将 `vite.config.ts` 中的 `base` 选项配置为更为通用的相对路径：
+为了确保在 Cloudflare Pages、GitHub Pages 或自定义域名下，静态资源解析都能保持绝对稳定：
+我们已经将 `vite.config.ts` 中的 `base` 选项配置为绝对路径：
 ```ts
 // vite.config.ts
 export default defineConfig({
-  base: './', // 👈 采用相对路径解析，彻底规避静态资源由于二级目录路径、子项目环境导致的 404 白页
+  base: '/', // 👈 采用绝对路径解析，确保在自定义域名和二级目录下静态资源的稳定性
   // ...
 });
 ```

@@ -29,12 +29,12 @@ export const getAssetUrl = (path: string) => {
   // Remove leading slashes or dots to normalize
   cleanPath = cleanPath.replace(/^(\.\/|\/)+/, '');
 
-  // 2. Resolve based on Vite's BASE_URL (defaults to './' if not specified)
-  const base = import.meta.env.BASE_URL || './';
+  // 2. Resolve based on Vite's BASE_URL (defaults to '/' for custom domains)
+  const base = import.meta.env.BASE_URL || '/';
   const prefix = base.endsWith('/') ? base : `${base}/`;
   const resolved = `${prefix}${cleanPath}`;
 
-  // 3. Encode for safety (essential for wallpapers with Chinese characters)
+  // 3. Simple encodeURI for safety with Chinese characters.
   // decodeURI ensures we don't double-encode paths already coming from state/storage
   try {
     return encodeURI(decodeURI(resolved));
