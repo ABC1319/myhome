@@ -39,6 +39,9 @@
 下面是项目完整的源码层级结构，各个组件均职责单一、无多余依赖：
 
 ```bash
+├── .github/
+│   └── workflows/
+│       └── deploy.yml      # CI/CD: 推送触发 GitHub Pages 自动编译部署服务
 ├── .env.example            # 环境变量配置模板（如 API Key 占位符）
 ├── .gitignore              # Git 提交过滤文件清单
 ├── index.html              # 应用唯一入口 HTML 实质承载页面
@@ -139,19 +142,32 @@ npx wrangler pages deploy dist
 
 ### 三、 💚 GitHub Pages 部署 (经典且完全免费)
 
-如果你希望能保留你的所有源码，同时快速直接使用 GitHub 仓库本身提供的托管服务，[GitHub Pages](https://pages.github.com/) 绝对是经典而忠实的港湾。
+如果你希望能保留你的所有源码，同时快速直接使用 GitHub 仓库本身提供的托管服务，[GitHub Pages](https://pages.github.com/) 绝对是经典而忠实的港湾。我们在此项目内已深度配套了 **GitHub Actions 自动化流水线（CI/CD）**，可以达到“一键提交，自动上线”的绝佳效果。
 
-1. **修改 `vite.config.ts` 中的 `base` 路径**：
-   假如您的 GitHub 仓库名叫做 `my-home-page`，且访问路径类似 `https://<YOUR_USER>.github.io/my-home-page/`。您需要确保 `vite.config.ts` 已经支持相对路径，直接将 base 设置为相对路径以适应任何子路径：
-   ```ts
-   // vite.config.ts
-   export default defineConfig({
-     base: './', // 👈 采用相对路径，彻底规避静态资源由于二级目录路径导致 404
-     // ... 其它配置保持原样
-   });
-   ```
+#### 1. 自动化 GitHub Actions 部署 (最推荐，免除一切手动操作)
+我们在项目内新建了 `.github/workflows/deploy.yml` 自动化工作流。只需把项目代码推送到您 GitHub 的 `main` 或 `master` 分支，GitHub Actions 将会自动执行以下动作：
+- 安全检出代码并自动缓存 Node.js 提升之后编译耗时。
+- 执行 `npm run build` 正式进行无缝单页编译输出。
+- 使用 `JamesIves/github-pages-deploy-action@v4` 一键将 `dist` 静态结果安全安全迁移、并持久更新存放到 `gh-pages` 分支中。
 
-2. **利用 `gh-pages` 依赖实现一键自动部署**：
+**配置指南（仅需一步）：**
+1. 在您 GitHub 仓库的 **"Settings" -> "Actions" -> "General"**。
+2. 往下拉找到 **"Workflow permissions"**，确保将其选择状态勾选为 **"Read and write permissions"**并保存（因为构建工具需要向 `gh-pages` 分支内写入编译所得的代码包）。
+3. 随后，一旦有代码推送到主分支，便可以进入 **"Actions"** 选项卡查看实时编译滚动日志。
+4. 编译成功后，进入 **"Settings" -> "Pages"**，确保 "Build and deployment" 下的 **"Branch"** 选项被配置为了 `gh-pages` 且保存，几分钟后便能在生成的链接内直接加载完美静态应用。
+
+#### 2. 修改 `vite.config.ts` 中的 `base` 路径 (我们已贴心为您预设好)
+假如您的 GitHub 仓库名叫做 `my-home-page`，且访问路径类似 `https://<YOUR_USER>.github.io/my-home-page/`。为了确保各种子地址或子路由解析不会错乱导致空白白块：
+我们已经将 `vite.config.ts` 中的 `base` 选项预设为了相对路径：
+```ts
+// vite.config.ts
+export default defineConfig({
+  base: './', // 👈 采用相对路径相对解析，彻底规避静态资源由于二级目录路径、子项目环境导致的 404 白页
+  // ...
+});
+```
+
+#### 3. 利用 `gh-pages` 开发包进行手动一键指令部署 (本地手动极速部署)
    在终端下安装部署工具开发包：
    ```bash
    npm install gh-pages --save-dev
