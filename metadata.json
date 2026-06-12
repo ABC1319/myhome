@@ -1,0 +1,10 @@
+{
+  "name": "雅致个人主页",
+  "description": "基于 imsyy/home 的二次开发个人主页，融合玻璃拟态设计、实时天气、一言诗句、动态时钟、音乐播放器、以及智能 AI 留言助手，极致视觉，触手可及。",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
