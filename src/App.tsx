@@ -25,34 +25,11 @@ export const getAssetUrl = (path: string) => {
   let cleanPath = path.replace(/.*\/src\/assets\//, 'assets/');
   cleanPath = cleanPath.replace(/^(\.\/|\/)+/, ''); // Strip leading ./ or /
 
-  // Dynamically compute the absolute path relative to the current location.
-  // This guarantees that whether the page is served at /my-custom-repo, /my-custom-repo/,
-  // or /my-custom-repo/index.html, the assets will ALWAYS load correctly from the same level.
-  let base = "/";
-  if (typeof window !== "undefined" && window.location) {
-    const pathname = window.location.pathname;
-    
-    if (pathname.endsWith('/') || pathname === '') {
-      base = pathname;
-    } else {
-      const lastSlashIdx = pathname.lastIndexOf('/');
-      if (lastSlashIdx >= 0) {
-        const lastPortion = pathname.substring(lastSlashIdx + 1);
-        if (lastPortion.includes('.')) {
-          // e.g. /my-custom-repo/index.html -> /my-custom-repo/
-          base = pathname.substring(0, lastSlashIdx + 1);
-        } else {
-          // e.g. /my-custom-repo -> /my-custom-repo/
-          base = pathname + '/';
-        }
-      }
-    }
-  }
-
-  // Combine and encode the final URL to safe ASCII characters.
-  // This is vital because the background/thumbnail files contain Chinese characters
-  // (e.g. "帆船-沙滩-治愈系.webp") which are sensitive to browser/CSS parsing without URL encoding.
-  const resolved = `${base.endsWith('/') ? base : base + '/'}${cleanPath}`;
+  // Use Vite's native BASE_URL
+  const base = import.meta.env.BASE_URL || '/';
+  const prefix = base.endsWith('/') ? base : `${base}/`;
+  
+  const resolved = `${prefix}${cleanPath}`;
   return encodeURI(resolved);
 };
 
