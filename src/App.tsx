@@ -29,9 +29,9 @@ export const getAssetUrl = (path: string) => {
   // Remove leading slashes or dots to normalize
   cleanPath = cleanPath.replace(/^(\.\/|\/)+/, '');
 
-  // 2. Resolve based on Vite's BASE_URL (defaults to '/' for custom domains)
-  const base = import.meta.env.BASE_URL || '/';
-  const prefix = base.endsWith('/') ? base : `${base}/`;
+  // 2. Resolve based on Vite's BASE_URL (defaults to './' if not specified)
+  const base = import.meta.env.BASE_URL || './';
+  const prefix = (base === './' || base === '') ? '' : (base.endsWith('/') ? base : `${base}/`);
   const resolved = `${prefix}${cleanPath}`;
 
   // 3. Simple encodeURI for safety with Chinese characters.
