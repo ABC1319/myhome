@@ -18,6 +18,7 @@ export default function Weather() {
     setErrorMsg("");
     try {
       const res = await fetch(`https://wttr.in/${encodeURIComponent(targetCity)}?format=j1&lang=zh`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       
       // Map wttr.in data structure to WeatherInfo
@@ -35,7 +36,7 @@ export default function Weather() {
       });
       localStorage.setItem("homepage_city", targetCity);
     } catch (e) {
-      setErrorMsg("天气服务暂不可用");
+      setErrorMsg(`天气加载失败: ${e instanceof Error ? e.message : '未知原因'}`);
     } finally {
       setIsLoading(false);
     }
