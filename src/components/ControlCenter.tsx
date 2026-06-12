@@ -30,50 +30,50 @@ export default function ControlCenter({
     {
       id: "shanchuan",
       name: "治愈帆船",
-      url: "/assets/帆船-沙滩-治愈系.webp",
-      thumbnail: "/assets/帆船-沙滩-治愈系.webp"
+      url: "assets/帆船-沙滩-治愈系.webp",
+      thumbnail: "assets/帆船-沙滩-治愈系.webp"
     },
     {
       id: "shujia",
       name: "书香角落",
-      url: "/assets/书架-书桌文具.webp",
-      thumbnail: "/assets/书架-书桌文具.webp"
+      url: "assets/书架-书桌文具.webp",
+      thumbnail: "assets/书架-书桌文具.webp"
     },
     {
       id: "xiaowu",
       name: "乡野小屋",
-      url: "/assets/乡村小屋-乡间小路.webp",
-      thumbnail: "/assets/乡村小屋-乡间小路.webp"
+      url: "assets/乡村小屋-乡间小路.webp",
+      thumbnail: "assets/乡村小屋-乡间小路.webp"
     },
     {
       id: "yewan",
       name: "云岚夜色",
-      url: "/assets/云彩-夜晚-夜景.webp",
-      thumbnail: "/assets/云彩-夜晚-夜景.webp"
+      url: "assets/云彩-夜晚-夜景.webp",
+      thumbnail: "assets/云彩-夜晚-夜景.webp"
     },
     {
       id: "chengshi",
       name: "华灯盛世",
-      url: "/assets/中国-城市建筑.webp",
-      thumbnail: "/assets/中国-城市建筑.webp"
+      url: "assets/中国-城市建筑.webp",
+      thumbnail: "assets/中国-城市建筑.webp"
     },
     {
       id: "erciyuan",
       name: "动漫场景",
-      url: "/assets/二次元-动漫场景.webp",
-      thumbnail: "/assets/二次元-动漫场景.webp"
+      url: "assets/二次元-动漫场景.webp",
+      thumbnail: "assets/二次元-动漫场景.webp"
     },
     {
       id: "diaochuang",
       name: "静谧吊床",
-      url: "/assets/吊床-宁静环境.webp",
-      thumbnail: "/assets/吊床-宁静环境.webp"
+      url: "assets/吊床-宁静环境.webp",
+      thumbnail: "assets/吊床-宁静环境.webp"
     },
     {
       id: "skyline",
       name: "璨烂天际",
-      url: "/assets/城市夜景-城市天际线.webp",
-      thumbnail: "/assets/城市夜景-城市天际线.webp"
+      url: "assets/城市夜景-城市天际线.webp",
+      thumbnail: "assets/城市夜景-城市天际线.webp"
     }
   ];
 
