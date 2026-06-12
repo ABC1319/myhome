@@ -7,6 +7,7 @@ import {
 
 import { getAssetUrl } from "./utils";
 import { PRESET_WALLPAPERS, VALID_WALLPAPER_FILENAMES, DEFAULT_WALLPAPER, SITE_LOGO } from "./data";
+import { Asset } from "./components/Asset";
 import Clock from "./components/Clock";
 import Weather from "./components/Weather";
 import Hitokoto from "./components/Hitokoto";
@@ -206,11 +207,10 @@ export default function App() {
               <div className="relative group/avatar flex-shrink-0">
                 <div className="absolute inset-x-0 inset-y-0 -m-1 rounded-full bg-gradient-to-tr from-indigo-500 via-pink-500 to-cyan-400 filter blur-sm group-hover/avatar:blur-md opacity-40 group-hover/avatar:opacity-100 transition-all animate-spin-slow"></div>
                 <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-slate-200/80 bg-white shadow-xl transition-transform duration-500 group-hover/avatar:rotate-[360deg] cursor-pointer">
-                  <img
-                    src={getAssetUrl(SITE_LOGO)}
+                  <Asset
+                    src={SITE_LOGO}
                     alt="Developer Avatar"
-                    className="w-full h-full object-cover rounded-full"
-                    referrerPolicy="no-referrer"
+                    className="w-full h-full"
                   />
                 </div>
               </div>
@@ -240,7 +240,9 @@ export default function App() {
                         className="p-2 bg-white/40 hover:bg-white border border-slate-200 hover:border-indigo-500/20 rounded-xl text-slate-700 hover:text-indigo-600 transition-all cursor-pointer shadow-sm relative group/btn"
                         title={soc.name}
                       >
-                        {soc.icon}
+                        <div className="w-5 h-5 flex items-center justify-center">
+                          {soc.icon}
+                        </div>
                         <span className="absolute bottom-full mb-1 px-2 py-1 bg-white border border-slate-200 text-[9px] text-slate-800 rounded opacity-0 pointer-events-none group-hover/btn:opacity-100 transition-opacity z-55 font-mono truncate max-w-44 whitespace-nowrap shadow-md">
                           {soc.tip}
                         </span>
@@ -254,7 +256,9 @@ export default function App() {
                         className="p-2 bg-white/40 hover:bg-white border border-slate-200 hover:border-indigo-500/20 rounded-xl text-slate-700 hover:text-indigo-600 transition-all cursor-pointer shadow-sm relative group/btn"
                         title={soc.name}
                       >
-                        {soc.icon}
+                        <div className="w-5 h-5 flex items-center justify-center">
+                          {soc.icon}
+                        </div>
                         <span className="absolute bottom-full mb-1 px-2 py-1 bg-white border border-slate-200 text-[9px] text-slate-800 rounded opacity-0 pointer-events-none group-hover/btn:opacity-100 transition-opacity z-55 font-mono truncate max-w-44 whitespace-nowrap shadow-md">
                           {soc.tip}
                         </span>
