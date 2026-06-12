@@ -20,12 +20,12 @@ type MenuTab = "sites" | "skills" | "player" | "guestbook" | "chat";
 export default function App() {
   // Sync core visual aesthetics from localStorage persistence
   const [wallpaper, setWallpaper] = useState(() => {
-    const defaultUrl = "/assets/帆船-沙滩-治愈系.webp";
+    const defaultUrl = "./assets/帆船-沙滩-治愈系.webp";
     const saved = localStorage.getItem("homepage_wallpaper");
     if (!saved) return defaultUrl;
-    // Migration: If the saved url is a legacy relative path "assets/...", reset it to default
-    if (saved.startsWith("assets/")) return defaultUrl;
-    if (saved.startsWith("/")) return saved.slice(1);
+    // Fix absolute or invalid paths
+    if (saved.startsWith("/assets/")) return "." + saved;
+    if (saved.startsWith("assets/")) return "./" + saved;
     return saved;
   });
 
@@ -200,7 +200,7 @@ export default function App() {
                 <div className="absolute inset-x-0 inset-y-0 -m-1 rounded-full bg-gradient-to-tr from-indigo-500 via-pink-500 to-cyan-400 filter blur-sm group-hover/avatar:blur-md opacity-40 group-hover/avatar:opacity-100 transition-all animate-spin-slow"></div>
                 <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden border-2 border-slate-200/80 bg-white shadow-xl transition-transform duration-500 group-hover/avatar:rotate-[360deg] cursor-pointer">
                   <img
-                    src="/assets/avatar2.png"
+                    src="./assets/avatar2.png"
                     alt="Developer Avatar"
                     className="w-full h-full object-cover rounded-full"
                     referrerPolicy="no-referrer"
