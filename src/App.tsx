@@ -256,7 +256,6 @@ export default function App() {
 
               {/* Top right glass decorative stamp */}
               <div className="absolute right-0 top-0 text-[64px] font-display font-black text-slate-900/5 pointer-events-none tracking-tighter mix-blend-overlay">
-                SKY
               </div>
             </div>
 
