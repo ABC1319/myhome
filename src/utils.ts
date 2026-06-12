@@ -12,11 +12,12 @@ export const getAssetUrl = (path: string | undefined): string => {
   // Extract pure filename to prevent path injection or redundant prefixes
   const filename = path.split('/').pop() || '';
   
-  // Standardize path construction using Vite's BASE_URL.
-  // This ensures the path is correctly prefixed whether the app is at the root or a subpath.
+  // Standardize path construction using Vite's BASE_URL (defaults to /).
+  // This ensures the path is correctly prefixed for the target deployment.
   const base = import.meta.env.BASE_URL || '/';
   const prefix = base.endsWith('/') ? base : `${base}/`;
   
-  // Combine prefix + assets + filename and clean up double slashes
-  return `${prefix}assets/${filename}`.replace(/\/+/g, '/').replace(':/', '://');
+  // Combine prefix + assets + filename and clean up double slashes.
+  // This produces a root-relative path (e.g., /assets/name.png) which is most reliable.
+  return `${prefix}assets/${filename}`.replace(/\/+/g, '/');
 };
