@@ -17,12 +17,11 @@ export const getAssetUrl = (path: string) => {
   cleanPath = cleanPath.replace(/^(\.\/|\/)+/, '');
 
   // 2. Resolve final URL using Vite's BASE_URL (which accounts for subdirectories if configured)
-  // or a smart relative directory detection.
   const base = import.meta.env.BASE_URL || './';
   
-  // Ensure the prefix and path connect correctly
   let resolved = '';
   if (base === './' || base === '') {
+    // Use ./ prefix for relative paths to be more explicit for some deployment environments
     resolved = `./${cleanPath}`;
   } else {
     const prefix = base.endsWith('/') ? base : `${base}/`;
@@ -30,7 +29,6 @@ export const getAssetUrl = (path: string) => {
   }
 
   // 3. Simple encodeURI for safety with Chinese characters.
-  // decodeURI ensures we don't double-encode paths already coming from state/storage
   try {
     const decoded = decodeURI(resolved);
     return encodeURI(decoded);

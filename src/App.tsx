@@ -23,10 +23,21 @@ export default function App() {
   const [wallpaper, setWallpaper] = useState(() => {
     const defaultRaw = "assets/帆船-沙滩-治愈系.webp";
     const saved = localStorage.getItem("homepage_wallpaper");
+    
+    // If no saved wallpaper, use default
     if (!saved) return getAssetUrl(defaultRaw);
     
-    // Fallback if the saved url is a legacy path
-    if (saved.includes('/src/assets/')) return getAssetUrl(defaultRaw);
+    // If saved wallpaper is an absolute path from a different base or legacy internal path, fix it
+    if (saved.startsWith('/') || saved.includes('/src/assets/')) {
+       // Extract filename if possible
+       const parts = saved.split('/');
+       const filename = parts[parts.length - 1];
+       if (filename && filename.includes('.')) {
+         return getAssetUrl(filename);
+       }
+       return getAssetUrl(defaultRaw);
+    }
+    
     return saved;
   });
 
