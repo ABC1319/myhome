@@ -12,6 +12,8 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout Repository
@@ -22,9 +24,7 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: package-lock.json
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+          cache-dependency-path: ./package-lock.json
 
       - name: Install Dependencies
         run: npm install
@@ -32,7 +32,6 @@ jobs:
       - name: Build Application
         run: npm run build:static
         env:
-          # Prevent full-stack server bundler from failing on build if env vars aren't present
           NODE_ENV: production
 
       - name: Deploy to GitHub Pages
