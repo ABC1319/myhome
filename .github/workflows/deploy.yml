@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Build Application
-        run: npm run build
+        run: npm run build:static
         env:
           # Prevent full-stack server bundler from failing on build if env vars aren't present
           NODE_ENV: production
