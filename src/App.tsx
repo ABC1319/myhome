@@ -143,7 +143,7 @@ export default function App() {
       {/* 1. Backdrop Fixed Wallpaper */}
       <div 
         className="fixed inset-0 bg-cover bg-center transition-all duration-700 ease-in-out scale-102"
-        style={{ backgroundImage: `url(${wallpaper})` }}
+        style={{ backgroundImage: `url("${wallpaper}")` }}
       />
 
       {/* 2. Glassmorphism Blur Dynamic filter layer */}
