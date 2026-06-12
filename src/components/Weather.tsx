@@ -12,22 +12,30 @@ export default function Weather() {
   const [errorMsg, setErrorMsg] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
-  // Fetch weather data from our server API wrapper
+  // Fetch weather data from direct wttr.in public API
   const fetchWeather = async (targetCity: string) => {
     setIsLoading(true);
     setErrorMsg("");
     try {
-      const res = await fetch(`/api/weather?city=${encodeURIComponent(targetCity)}`);
+      const res = await fetch(`https://wttr.in/${encodeURIComponent(targetCity)}?format=j1&lang=zh`);
       const data = await res.json();
-      if (data.success) {
-        setWeatherData(data);
-        localStorage.setItem("homepage_city", targetCity);
-      } else {
-        // Fallback or show error
-        setErrorMsg("无法获取该城市天气信息");
-      }
+      
+      // Map wttr.in data structure to WeatherInfo
+      const current = data.current_condition[0];
+      setWeatherData({
+        city: targetCity,
+        temp: parseInt(current.temp_C, 10),
+        condition: current.weatherDesc[0].value.includes("晴") ? "sunny" : 
+                   current.weatherDesc[0].value.includes("雨") ? "rainy" : 
+                   current.weatherDesc[0].value.includes("雪") ? "snowy" : "cloudy",
+        description: current.weatherDesc[0].value,
+        humidity: current.humidity + "%",
+        windSpeed: current.windspeedKmph + "km/h",
+        icon: "" // Not needed with current mapping
+      });
+      localStorage.setItem("homepage_city", targetCity);
     } catch (e) {
-      setErrorMsg("服务器连接失败");
+      setErrorMsg("天气服务暂不可用");
     } finally {
       setIsLoading(false);
     }
