@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: '/', // Using absolute paths for better reliability on custom domains
+    base: './', // Using relative paths for better compatibility across various deployment environments (Cloudflare, GH Pages)
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

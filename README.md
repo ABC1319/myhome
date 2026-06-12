@@ -157,18 +157,24 @@ npx wrangler pages deploy dist
 3. 随后，一旦有代码推送到主分支，便可以进入 **"Actions"** 选项卡查看实时编译滚动日志。
 4. 编译成功后，进入 **"Settings" -> "Pages"**，确保 "Build and deployment" 下的 **"Branch"** 选项被配置为了 `gh-pages` 且保存，几分钟后便能在生成的链接内直接加载完美静态应用。
 
-#### 2. 修改 `vite.config.ts` 中的 `base` 路径 (我们已贴心为您预设好)
-假如您的 GitHub 仓库名叫做 `my-home-page`，且访问路径类似 `https://<YOUR_USER>.github.io/my-home-page/`。为了确保各种子地址或子路由解析不会错乱导致空白白块：
-我们已经将 `vite.config.ts` 中的 `base` 选项预设为了相对路径：
+#### 2. 修改 `vite.config.ts` 中的 `base` 路径 (生产环境优化)
+为了确保在 Cloudflare Pages、GitHub Pages 或各种子目录下，静态资源解析都能自动适配：
+我们已经将 `vite.config.ts` 中的 `base` 选项配置为更为通用的相对路径：
 ```ts
 // vite.config.ts
 export default defineConfig({
-  base: './', // 👈 采用相对路径相对解析，彻底规避静态资源由于二级目录路径、子项目环境导致的 404 白页
+  base: './', // 👈 采用相对路径解析，彻底规避静态资源由于二级目录路径、子项目环境导致的 404 白页
   // ...
 });
 ```
 
-#### 3. 利用 `gh-pages` 开发包进行手动一键指令部署 (本地手动极速部署)
+#### 3. 静态资源路径适配 (Asset Path Fix)
+针对部分部署环境（如 Cloudflare / Vercel）中中文文件名或特殊路径导致 404 的问题，项目已内置以下优化：
+- **路径标准化**：统一使用相对路径前缀，自动过滤 `assets/` 路径前缀冗余。
+- **URL 编码过滤**：自动对包含中文或空格的壁纸路径执行 `encodeURI`，确保背景图在所有浏览器和 CDN 节点中均能正确呈现。
+- **LocalStorage 兼容**：自动兼容解码已存储的路径，防止重复编码导致的解析失败。
+
+#### 4. 利用 `gh-pages` 开发包进行手动一键指令部署 (本地手动极速部署)
    在终端下安装部署工具开发包：
    ```bash
    npm install gh-pages --save-dev

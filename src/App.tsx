@@ -21,16 +21,26 @@ export const getAssetUrl = (path: string) => {
   if (!path) return '';
   if (path.startsWith('http') || path.startsWith('data:')) return path;
 
-  // Clean and normalize legacy paths
-  let cleanPath = path.replace(/.*\/src\/assets\//, 'assets/');
-  cleanPath = cleanPath.replace(/^(\.\/|\/)+/, ''); // Strip leading ./ or /
+  // 1. Clean path - extract everything after 'assets/' to avoid double prefixes or legacy internal paths
+  let cleanPath = path;
+  if (path.includes('assets/')) {
+    cleanPath = path.substring(path.indexOf('assets/'));
+  }
+  // Remove leading slashes or dots to normalize
+  cleanPath = cleanPath.replace(/^(\.\/|\/)+/, '');
 
-  // Use Vite's native BASE_URL
-  const base = import.meta.env.BASE_URL || '/';
+  // 2. Resolve based on Vite's BASE_URL (defaults to './' if not specified)
+  const base = import.meta.env.BASE_URL || './';
   const prefix = base.endsWith('/') ? base : `${base}/`;
-  
   const resolved = `${prefix}${cleanPath}`;
-  return encodeURI(resolved);
+
+  // 3. Encode for safety (essential for wallpapers with Chinese characters)
+  // decodeURI ensures we don't double-encode paths already coming from state/storage
+  try {
+    return encodeURI(decodeURI(resolved));
+  } catch (e) {
+    return encodeURI(resolved);
+  }
 };
 
 export default function App() {
