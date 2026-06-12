@@ -86,6 +86,13 @@
 
 ### 2. 更新预设数据配置
 打开项目中的 `src/data.ts` 文件，在 `PRESET_WALLPAPERS` 数组中添加一个新项。
+{
+  id: "custom_01",           // 唯一标识符
+  name: "我的新壁纸",         // 在设置面板显示的中文名称
+  url: "my-wallpaper.webp",          // 刚才上传的文件名
+  thumbnail: "my-wallpaper.webp",    // 缩略图（通常和原图一致）
+  isDark: true               // 如果是暗色背景设为 true，界面会自动调优透明度和文字颜色
+},
 
 **示例代码：**
 ```typescript

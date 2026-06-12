@@ -337,7 +337,7 @@ export default function App() {
 
           <div className="text-[10px] sm:text-xs text-slate-600 font-sans tracking-wide">
             <span>© 2026  </span>
-            <a href="https://myhome.13145219.xyz/" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 border-b border-slate-300 hover:border-indigo-600 transition-colors">
+            <a href="https://myhomei.netlify.app/" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 border-b border-slate-300 hover:border-indigo-600 transition-colors">
                My home
             </a>
             <span> | By Sky</span>
