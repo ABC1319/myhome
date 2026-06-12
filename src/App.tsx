@@ -19,23 +19,15 @@ type MenuTab = "sites" | "skills" | "player" | "guestbook" | "chat";
 
 export const getAssetUrl = (path: string) => {
   if (!path) return '';
-  // Convert old src/assets to public assets
-  if (path.includes('/src/assets/')) {
-    path = path.replace(/.*\/src\/assets\//, 'assets/');
-  }
-  // Convert absolute local URLs or paths
-  if (path.startsWith('http') && path.includes(window.location.host)) {
-    try {
-      const url = new URL(path);
-      path = url.pathname.replace(/^\/+/, ''); // e.g. "assets/..."
-    } catch (e) {}
-  }
   if (path.startsWith('http') || path.startsWith('data:')) return path;
 
-  // Normalize path removing leading slashes and dots
-  const cleanPath = path.replace(/^(\.\/|\/)+/, '');
-  const base = import.meta.env.BASE_URL || '/';
-  return `${base.endsWith('/') ? base : base + '/'}${cleanPath}`;
+  // Clean and normalize legacy paths
+  let cleanPath = path.replace(/.*\/src\/assets\//, 'assets/');
+  cleanPath = cleanPath.replace(/^(\.\/|\/)+/, ''); // Strip leading ./ or /
+
+  // By using a relative path, gh-pages will correctly resolve the assets
+  // from the current directory where index.html is served.
+  return `./${cleanPath}`;
 };
 
 export default function App() {

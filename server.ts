@@ -24,7 +24,7 @@ const VISITOR_FILE = path.join(DATA_DIR, "visitor.json");
 app.use(express.json());
 
 // Serve background wallpaper assets statically
-app.use("/assets", express.static(path.join(process.cwd(), "assets")));
+app.use("/assets", express.static(path.join(process.cwd(), "public/assets")));
 
 // Helper to read and write guestbook messages
 function getGuestbookMessages() {
